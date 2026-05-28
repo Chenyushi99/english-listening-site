@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>影视口语听写练习室</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <section class="login-screen" id="login-screen" aria-label="登录">
+      <form class="login-card" id="login-form">
+        <div class="brand login-brand">
+          <span class="brand-mark" aria-hidden="true">L</span>
+          <div>
+            <h1>影视口语听写</h1>
+            <p>输入名字进入自己的学习进度</p>
+          </div>
+        </div>
+
+        <label for="username-input">用户名</label>
+        <input id="username-input" type="text" autocomplete="username" placeholder="例如 Alice">
+
+        <label for="user-select">已有用户</label>
+        <select id="user-select">
+          <option value="">选择已有用户</option>
+        </select>
+
+        <button class="primary-button" type="submit">进入学习</button>
+        <p class="login-note">数据保存在当前浏览器里，不同用户名的进度互不干扰。</p>
+      </form>
+    </section>
+
+    <main class="app-shell locked">
+      <section class="workspace" aria-label="影视口语听写练习应用">
+        <aside class="sidebar">
+          <div class="brand">
+            <span class="brand-mark" aria-hidden="true">L</span>
+            <div>
+              <h1>影视口语听写</h1>
+              <p>只听声音，把英文拼出来</p>
+            </div>
+          </div>
+
+          <nav class="nav-tabs" aria-label="学习模块">
+            <button class="tab-button active" type="button" data-tab="practice" aria-pressed="true">
+              <span aria-hidden="true">▶</span>
+              听写
+            </button>
+            <button class="tab-button" type="button" data-tab="library" aria-pressed="false">
+              <span aria-hidden="true">Aa</span>
+              素材库
+            </button>
+            <button class="tab-button" type="button" data-tab="test" aria-pressed="false">
+              <span aria-hidden="true">T</span>
+              测试
+            </button>
+            <button class="tab-button" type="button" data-tab="review" aria-pressed="false">
+              <span aria-hidden="true">✓</span>
+              复习
+            </button>
+          </nav>
+
+          <div class="filter-panel">
+            <div class="user-panel">
+              <span class="panel-label">当前用户</span>
+              <strong id="active-user-name">未登录</strong>
+              <button class="secondary-button compact" type="button" id="switch-user">切换</button>
+            </div>
+
+            <label for="level-filter">难度</label>
+            <select id="level-filter">
+              <option value="all">全部</option>
+              <option value="A2">A2 日常</option>
+              <option value="B1">B1 进阶</option>
+              <option value="B2">B2 流畅</option>
+              <option value="C1">C1 高阶</option>
+              <option value="C2">C2 长难句</option>
+            </select>
+
+            <label for="accent-filter">口音</label>
+            <select id="accent-filter">
+              <option value="all">全部</option>
+              <option value="US">美音</option>
+              <option value="UK">英音</option>
+              <option value="IN">印度英语</option>
+              <option value="JP">日式英语</option>
+              <option value="Mixed">混合/国际</option>
+            </select>
+          </div>
+
+          <div class="goal-panel">
+            <div>
+              <span class="panel-label">今日目标</span>
+              <strong><span id="completed-count">0</span>/12</strong>
+            </div>
+            <div class="progress-track" aria-label="今日学习进度">
+              <span id="progress-fill"></span>
+            </div>
+          </div>
+        </aside>
+
+        <section class="main-panel">
+          <header class="hero">
+            <div class="hero-copy">
+              <p class="eyebrow">Movie & TV Listening</p>
+              <h2>用近年热门影视常见口语，练真正听得懂、拼得出的英文。</h2>
+            </div>
+            <div class="streak-box" aria-label="听写正确率">
+              <span>正确率</span>
+              <strong id="accuracy-count">0%</strong>
+            </div>
+          </header>
+
+          <section class="tab-panel active" id="practice" aria-label="听写练习">
+            <div class="section-head">
+              <div>
+                <p class="panel-label">Dictation</p>
+                <h3>听力拼写</h3>
+              </div>
+              <div class="toolbar">
+                <button class="icon-button" type="button" id="prev-item" title="上一条" aria-label="上一条">‹</button>
+                <button class="icon-button" type="button" id="play-slow" title="慢速朗读" aria-label="慢速朗读">S</button>
+                <button class="icon-button" type="button" id="play-normal" title="正常朗读" aria-label="正常朗读">▶</button>
+                <button class="icon-button" type="button" id="next-item" title="下一条" aria-label="下一条">›</button>
+              </div>
+            </div>
+
+            <article class="practice-card">
+              <div class="meta-row">
+                <span class="tag" id="item-level">B1</span>
+                <span class="source-pill" id="item-source">参考：The Bear</span>
+              </div>
+
+              <label class="answer-label" for="dictation-input">输入你听到的英文</label>
+              <div class="dictation-row">
+                <input id="dictation-input" type="text" autocomplete="off" spellcheck="false" placeholder="Type the phrase here">
+                <button class="primary-button" type="button" id="check-answer">检查</button>
+              </div>
+
+              <p class="feedback" id="feedback" aria-live="polite">先播放声音，再把听到的英文拼出来。</p>
+
+              <div class="hint-row">
+                <button class="secondary-button" type="button" id="show-meaning">中文提示</button>
+                <button class="secondary-button" type="button" id="show-initials">首字母提示</button>
+                <button class="secondary-button" type="button" id="reveal-answer">看答案</button>
+                <button class="secondary-button" type="button" id="mark-hard">标为难句</button>
+              </div>
+
+              <div class="meaning-box" id="meaning-box" hidden>
+                <span>中文提示</span>
+                <p id="item-meaning">我来处理。</p>
+              </div>
+
+              <div class="answer-box" id="answer-box" hidden>
+                <span>答案</span>
+                <p id="item-phrase">I'm on it.</p>
+                <small id="item-note">常用于表示“这事交给我”。</small>
+              </div>
+            </article>
+          </section>
+
+          <section class="tab-panel" id="library" aria-label="素材库">
+            <div class="section-head">
+              <div>
+                <p class="panel-label">Library</p>
+                <h3>影视口语素材库</h3>
+              </div>
+              <span class="score-pill"><strong id="library-count">0</strong> 条</span>
+            </div>
+            <p class="source-note">素材按约 51 天、每天 5 条整理，重点加入短语动词、习语和高阶口语句块；不收录整段剧本台词。来源名称只作为影视语境参考，帮助你联想使用场景。</p>
+            <div class="library-list" id="library-list"></div>
+          </section>
+
+          <section class="tab-panel" id="test" aria-label="测试">
+            <div class="section-head">
+              <div>
+                <p class="panel-label">Test</p>
+                <h3>已学内容测试</h3>
+              </div>
+              <span class="score-pill">测试得分 <strong id="test-score">0</strong></span>
+            </div>
+
+            <article class="test-card">
+              <p class="source-note" id="test-empty">答对听写后，系统会自动从已学内容里抽题。现在也可以先用推荐题热身。</p>
+              <div class="meaning-box">
+                <span>选择正确英文</span>
+                <p id="test-meaning">我来处理。</p>
+              </div>
+              <div class="answers" id="test-answers"></div>
+              <div class="hint-row">
+                <button class="secondary-button" type="button" id="play-test">播放题目</button>
+                <button class="secondary-button" type="button" id="next-test">下一题</button>
+              </div>
+              <p class="feedback" id="test-feedback" aria-live="polite">根据中文选择你学过的英文表达。</p>
+            </article>
+          </section>
+
+          <section class="tab-panel" id="review" aria-label="复习">
+            <div class="section-head">
+              <div>
+                <p class="panel-label">Review</p>
+                <h3>错题与难句</h3>
+              </div>
+              <button class="secondary-button compact" type="button" id="clear-review">清空</button>
+            </div>
+            <div class="review-list" id="review-list"></div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
